@@ -4,5 +4,32 @@
 @import "src/view/style/mixins";
 
 .section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   width: 100%;
+
+  &-controller {
+    position: sticky;
+    top: 0;
+    //right: 0;
+    padding: 4px;
+    border-radius: 4px;
+    transform: translateX(calc(100% + 10px));
+    background-color: $white;
+
+    &-add {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: $gray5;
+      }
+    }
+
+  }
 }
