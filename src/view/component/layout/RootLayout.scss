@@ -1,0 +1,9 @@
+@import "src/view/style/variable";
+@import "src/view/style/color";
+@import "src/view/style/font";
+@import "src/view/style/mixins";
+
+.root-layout {
+  width: 100%;
+  background-color: $quaternary;
+}
