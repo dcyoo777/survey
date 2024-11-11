@@ -8,7 +8,6 @@ import {
 } from "@reduxjs/toolkit";
 import {QUESTION_TYPE, QuestionEntity, SectionEntity, SurveyRedux} from "./type";
 import {RootState} from "./index";
-import section from "../view/component/section/Section";
 
 const sectionAdapter = createEntityAdapter<SectionEntity>({
     sortComparer: (a, b) => a.id.toString().localeCompare(b.id.toString())
@@ -21,7 +20,7 @@ export const {
 } = sectionAdapter.getSelectors<RootState>((state: RootState) => state.survey.sections);
 
 const questionAdapter = createEntityAdapter<QuestionEntity>({
-    sortComparer: (a, b) => a.id.toString().localeCompare(b.id.toString())
+    sortComparer: (a, b) => a.order - b.order
 });
 
 export const {
@@ -61,6 +60,7 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
                 description: '',
                 questions: questionAdapter.getInitialState({})
             };
+            console.log(newSection)
             sectionAdapter.addOne(state.sections, newSection);
         },
         updateSection: (state, action: PayloadAction<SectionEntity>) => {
@@ -86,12 +86,23 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
                 id: state.sections.entities[action.payload].questions.ids.length + 1,
                 type: QUESTION_TYPE.RADIO_BUTTON,
                 question: '',
+                isShowDescription: false,
                 description: '',
                 answer: '',
                 isRequired: false,
-                options: [{id: 1, label: '옵션 1'}]
+                options: [{id: 1, label: '옵션 1'}],
+                order: state.sections.entities[action.payload].questions.ids.length
             }
             questionAdapter.addOne(state.sections.entities[action.payload].questions, newQuestion);
+        },
+        copyQuestion: (state, action: PayloadAction<{ sectionId: EntityId, question: QuestionEntity, order: number }>) => {
+            const { sectionId, question, order } = action.payload;
+            const newQuestion: QuestionEntity = {
+                ...question,
+                id: state.sections.entities[sectionId].questions.ids.length + 1,
+                order
+            }
+            questionAdapter.addOne(state.sections.entities[sectionId].questions, newQuestion);
         },
         updateQuestion: (state, action: PayloadAction<{sectionId: EntityId, question: QuestionEntity}>) => {
             const {sectionId, question} = action.payload;

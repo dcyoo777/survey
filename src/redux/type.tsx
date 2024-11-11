@@ -14,9 +14,11 @@ export type QuestionCommonType = {
     id: EntityId;
     type: QuestionType;
     question: string;
+    isShowDescription: boolean;
     description?: string;
     answer?: string;
     isRequired: boolean;
+    order: number;
 }
 
 export type QuestionOptionType = {
@@ -49,6 +51,13 @@ export type SectionEntity = {
     title: string;
     description: string;
     questions: EntityState<QuestionEntity, EntityId>;
+}
+
+export type SectionType = {
+    id: EntityId;
+    title: string;
+    description: string;
+    questions: QuestionEntity[];
 }
 
 export type SurveyRedux = {
