@@ -130,6 +130,7 @@ export const {
     removeSection,
     createQuestion,
     updateQuestion,
+    copyQuestion,
     reorderQuestions,
     removeQuestion
 } = surveySlice.actions;

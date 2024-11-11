@@ -15,7 +15,7 @@ function Main() {
             // @ts-ignore
             dispatch(createSection())
         }
-    }, []);
+    }, [dispatch, sectionIds.length]);
 
     return (
         <main>
