@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import SectionHeader from "./SectionHeader";
 import {useDispatch, useSelector} from "react-redux";
-import {createQuestion, selectQuestionIds, selectSectionById} from "../../../redux/survey";
+import {createQuestion, selectSectionById} from "../../../redux/survey";
 import {RootState} from "../../../redux";
 import {EntityId} from "@reduxjs/toolkit";
 import Question from "../question/Question";

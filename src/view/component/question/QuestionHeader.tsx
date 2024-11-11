@@ -3,6 +3,7 @@ import {EntityId} from "@reduxjs/toolkit";
 import {QuestionEntity} from "../../../redux/type";
 import {useDispatch} from "react-redux";
 import {updateQuestion, updateSection} from "../../../redux/survey";
+import './QuestionHeader.scss';
 
 type QuestionHeaderProps = {
     sectionId: EntityId;
@@ -24,12 +25,15 @@ function QuestionHeader({sectionId, question}: QuestionHeaderProps) {
             }
         }));
 
-    }, [dispatch]);
+    }, [dispatch, question, sectionId]);
 
     return (
-        <div>
-            <input name={"title"} value={question.question} onChange={onChange} />
-            <input name={"description"} value={question.description} onChange={onChange}/>
+        <div className={"question-header"}>
+            <div className={"question-header-top"}>
+                <input className={"question-header-question"} name={"question"} value={question.question} onChange={onChange} placeholder={"질문"} />
+                <div></div>
+            </div>
+            <input className={"question-header-description"} name={"description"} value={question.description} onChange={onChange} placeholder={"설명"}/>
         </div>
     );
 }

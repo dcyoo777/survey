@@ -3,3 +3,54 @@
 @import "src/view/style/font";
 @import "src/view/style/mixins";
 
+
+.question-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  &-top {
+    display: flex;
+    align-items: center;
+  }
+
+  &-question {
+    width: 100%;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: $black;
+    border: none;
+    border-bottom: solid 2px transparent;
+    outline: none;
+    appearance: none;
+    transition: all 0.2s;
+
+
+    &:focus {
+      border-bottom: solid 2px $secondary;
+    }
+
+    &::placeholder {
+      color: $gray2;
+    }
+  }
+
+  &-description {
+    margin-top: 6px;
+    font-size: .9em;
+    color: $black;
+    border: none;
+    border-bottom: solid 2px transparent;
+    outline: none;
+    appearance: none;
+    transition: all 0.2s;
+
+    &:focus {
+      border-bottom: solid 2px $secondary;
+    }
+
+    &::placeholder {
+      color: $gray4;
+    }
+  }
+}
