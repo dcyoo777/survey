@@ -51,7 +51,7 @@ function SelectQuestionType({selectedQuestionType, setSelectedQuestionType}: Sel
     const onSelect = useCallback((questionType: QuestionType) => {
         setSelectedQuestionType(questionType);
         setIsSelectActive(false);
-    }, []);
+    }, [setSelectedQuestionType]);
 
     const selectRef = useClickOutside({
         handler: () => {

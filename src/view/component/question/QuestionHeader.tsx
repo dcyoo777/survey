@@ -37,9 +37,7 @@ function QuestionHeader({sectionId, question}: QuestionHeaderProps) {
                 type: questionType
             }
         }));
-    }, [])
-
-
+    }, [dispatch, question, sectionId])
 
     return (
         <div className={"question-header"}>
