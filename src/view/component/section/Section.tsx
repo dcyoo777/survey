@@ -6,6 +6,7 @@ import {RootState} from "../../../redux";
 import {EntityId} from "@reduxjs/toolkit";
 import Question from "../question/Question";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
+import './Section.scss'
 
 type SectionProps = {
     sectionId: EntityId;
@@ -16,7 +17,7 @@ function Section({sectionId}: SectionProps) {
     const section = useSelector((state: RootState) => selectSectionById(state, sectionId));
 
     return (
-        <div>
+        <div className={"section"}>
             <SectionHeader section={section} />
             {section.questions.map((question) =>
                 <Question key={`section-${sectionId}_question-${question.id}`}
