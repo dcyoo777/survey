@@ -1,5 +1,4 @@
 import React from 'react';
-import SectionHeader from "./SectionHeader";
 
 function Question() {
 
@@ -7,7 +6,6 @@ function Question() {
 
     return (
         <div>
-            <SectionHeader/>
         </div>
     );
 }

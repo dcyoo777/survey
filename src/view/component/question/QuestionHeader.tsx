@@ -1,15 +1,11 @@
 import React from 'react';
-import SectionHeader from "./SectionHeader";
 
-function Question() {
-
-
+function QuestionHeader() {
 
     return (
         <div>
-            <SectionHeader/>
         </div>
     );
 }
 
-export default Question;
+export default QuestionHeader;

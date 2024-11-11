@@ -3,8 +3,3 @@
 @import "src/view/style/font";
 @import "src/view/style/mixins";
 
-main {
-  padding: 20px;
-  @include max-width-container(800px);
-
-}

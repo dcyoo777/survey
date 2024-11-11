@@ -1,6 +1,6 @@
 import React from 'react';
 import './RootLayout.scss';
-import Main from "./Main";
+import Main from "../page/Main";
 
 function RootLayout() {
     return (
