@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './Main.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {createSection, selectSectionIds} from "../../../redux/survey";
+import {createSection, loadSurvey, selectSectionIds, selectSurvey} from "../../../redux/survey";
 import Section from "../section/Section";
 
 function Main() {
@@ -16,6 +16,8 @@ function Main() {
             dispatch(createSection())
         }
     }, [dispatch, sectionIds.length]);
+
+
 
     return (
         <main>

@@ -66,6 +66,9 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
     name: 'survey',
     initialState: INITIAL_SURVEY_STATE,
     reducers: {
+        loadSurvey: (state, action: PayloadAction<SurveyRedux>) => {
+            return action.payload;
+        },
         createSection: (state) => {
             const newSection: SectionEntity = {
                 id: state.sections.ids.length + 1,
@@ -140,6 +143,7 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
 });
 
 export const {
+    loadSurvey,
     createSection,
     updateSection,
     reorderSections,
@@ -152,6 +156,7 @@ export const {
     setMode
 } = surveySlice.actions;
 
+export const selectSurvey = (state: RootState) => state.survey;
 export const selectMode = (state: RootState) => state.survey.mode;
 
 export default surveySlice;

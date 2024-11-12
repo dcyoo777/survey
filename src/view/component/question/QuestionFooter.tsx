@@ -5,7 +5,7 @@ import {MdDeleteOutline, MdOutlineContentCopy} from "react-icons/md";
 import {HiDotsVertical} from "react-icons/hi";
 import Toggle from "react-toggle";
 import "react-toggle/style.css"
-import {copyQuestion, removeQuestion, updateQuestion} from "../../../redux/survey";
+import {copyQuestion, removeQuestion, selectAllQuestion, updateQuestion} from "../../../redux/survey";
 import useClickOutside from "../../../hook/useClickOutside";
 import {questionContext} from "./Question";
 
@@ -18,7 +18,9 @@ function QuestionFooter() {
     const [isShowMenu, setIsShowMenu] = React.useState(false);
 
     const onCopy = useCallback(() => {
-        dispatch(copyQuestion({sectionId, question}));
+        // selectAllQuestion(section, question);
+
+        dispatch(copyQuestion({sectionId, question, order: question.order + 0.001}));
     }, [dispatch, question, sectionId]);
 
     const onDelete = useCallback(() => {
