@@ -1,10 +1,16 @@
-import React, {useCallback} from 'react';
+import React, {createContext, useCallback} from 'react';
 import {EntityId} from "@reduxjs/toolkit";
 import {QuestionEntity} from "../../../redux/type";
 import QuestionHeader from "./QuestionHeader";
 import QuestionBody from "./QuestionBody";
 import QuestionFooter from "./QuestionFooter";
 import './Question.scss';
+import {defaultQuestion} from "../../../redux/survey";
+
+export const questionContext:React.Context<{sectionId: EntityId, question: QuestionEntity}> = createContext({
+    question: defaultQuestion,
+    sectionId: 0 as EntityId
+});
 
 type QuestionProps = {
     sectionId: EntityId;
@@ -14,11 +20,13 @@ type QuestionProps = {
 function Question({sectionId, question}: QuestionProps) {
 
     return (
-        <div className={"question"}>
-            <QuestionHeader sectionId={sectionId} question={question}/>
-            <QuestionBody sectionId={sectionId} question={question}/>
-            <QuestionFooter sectionId={sectionId} question={question}/>
-        </div>
+        <questionContext.Provider value={{question, sectionId}}>
+            <div className={"question"}>
+                <QuestionHeader/>
+                <QuestionBody/>
+                <QuestionFooter/>
+            </div>
+        </questionContext.Provider>
     );
 }
 

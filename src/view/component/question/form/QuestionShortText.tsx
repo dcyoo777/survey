@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './QuestionShortText.scss';
+import {questionContext} from "../Question";
 
-type QuestionShortTextProps = {
+function QuestionShortText() {
 
-}
-
-function QuestionShortText({}) {
+    const {sectionId, question} = useContext(questionContext);
 
     return (
         <div className={"question-short-text"}>

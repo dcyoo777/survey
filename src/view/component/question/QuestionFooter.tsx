@@ -1,6 +1,4 @@
-import React, {useCallback} from 'react';
-import {EntityId} from "@reduxjs/toolkit";
-import {QuestionEntity} from "../../../redux/type";
+import React, {useCallback, useContext} from 'react';
 import {useDispatch} from "react-redux";
 import './QuestionFooter.scss';
 import {MdDeleteOutline, MdOutlineContentCopy} from "react-icons/md";
@@ -9,15 +7,13 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css"
 import {copyQuestion, removeQuestion, updateQuestion} from "../../../redux/survey";
 import useClickOutside from "../../../hook/useClickOutside";
+import {questionContext} from "./Question";
 
-type QuestionFooterProps = {
-    sectionId: EntityId;
-    question: QuestionEntity;
-}
-
-function QuestionFooter({sectionId, question}: QuestionFooterProps) {
+function QuestionFooter() {
 
     const dispatch = useDispatch();
+
+    const {sectionId, question} = useContext(questionContext);
 
     const [isShowMenu, setIsShowMenu] = React.useState(false);
 

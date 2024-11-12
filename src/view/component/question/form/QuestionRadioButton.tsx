@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {questionContext} from "../Question";
 
 function QuestionRadioButton() {
+
+    const {sectionId, question} = useContext(questionContext);
 
     return (
         <div>

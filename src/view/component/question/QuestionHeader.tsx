@@ -1,20 +1,17 @@
-import React, {useCallback} from 'react';
-import {EntityId} from "@reduxjs/toolkit";
-import {QuestionEntity, QuestionType} from "../../../redux/type";
+import React, {useCallback, useContext} from 'react';
+import {QuestionType} from "../../../redux/type";
 import {useDispatch} from "react-redux";
 import {updateQuestion} from "../../../redux/survey";
 import './QuestionHeader.scss';
 import SelectQuestionType from "./SelectQuestionType";
+import {questionContext} from "./Question";
 
-type QuestionHeaderProps = {
-    sectionId: EntityId;
-    question: QuestionEntity;
-}
+type QuestionHeaderProps = {}
 
-function QuestionHeader({sectionId, question}: QuestionHeaderProps) {
+function QuestionHeader() {
 
     const dispatch = useDispatch();
-
+    const {sectionId, question} = useContext(questionContext);
 
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;

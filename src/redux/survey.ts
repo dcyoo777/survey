@@ -9,6 +9,18 @@ import {
 import {QUESTION_TYPE, QuestionEntity, SectionEntity, SurveyRedux} from "./type";
 import {RootState} from "./index";
 
+export const defaultQuestion: QuestionEntity = {
+    id: 0,
+    type: QUESTION_TYPE.RADIO_BUTTON,
+    question: '',
+    isShowDescription: false,
+    description: '',
+    answer: '',
+    isRequired: false,
+    options: [{id: 1, label: '옵션 1'}],
+    order: 0
+};
+
 const sectionAdapter = createEntityAdapter<SectionEntity>({
     sortComparer: (a, b) => a.id.toString().localeCompare(b.id.toString())
 });
