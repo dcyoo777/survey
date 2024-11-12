@@ -1,19 +1,34 @@
-import React, {useContext} from 'react';
+import React, {useCallback, useContext} from 'react';
 import './QuestionShortText.scss';
 import {questionContext} from "../Question";
-import {useSelector} from "react-redux";
-import {selectMode} from "../../../../redux/survey";
+import {useDispatch, useSelector} from "react-redux";
+import {selectMode, updateQuestion} from "../../../../redux/survey";
 import {SURVEY_MODE} from "../../../../redux/type";
 
 function QuestionShortText() {
+
+    const dispatch = useDispatch();
 
     const {sectionId, question} = useContext(questionContext);
 
     const mode = useSelector(selectMode);
 
+    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+
+        dispatch(updateQuestion({
+            sectionId,
+            question: {
+                ...question,
+                [name]: value
+            }
+        }));
+
+    }, [dispatch, question, sectionId]);
+
     return (
         <div className={"question-short-text"}>
-            <input className={"question-short-text-input"} placeholder={"짧은 답변을 입력해주세요."} disabled={mode !== SURVEY_MODE.VIEW}/>
+            <input className={"question-short-text-input"} name={'answer'} value={question.answer} onChange={onChange} placeholder={"짧은 답변을 입력해주세요."} disabled={mode !== SURVEY_MODE.VIEW}/>
         </div>
     );
 }
