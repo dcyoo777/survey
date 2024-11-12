@@ -60,6 +60,14 @@ export type SectionType = {
     questions: QuestionEntity[];
 }
 
+export const SURVEY_MODE = {
+    EDIT: 'EDIT',
+    VIEW: 'VIEW',
+} as const;
+
+export type SurveyMode = typeof SURVEY_MODE[keyof typeof SURVEY_MODE];
+
 export type SurveyRedux = {
     sections: EntityState<SectionEntity, EntityId>;
+    mode: SurveyMode;
 }

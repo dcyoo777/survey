@@ -6,7 +6,7 @@ import {
     PayloadAction,
     Slice
 } from "@reduxjs/toolkit";
-import {QUESTION_TYPE, QuestionEntity, SectionEntity, SurveyRedux} from "./type";
+import {QUESTION_TYPE, QuestionEntity, SectionEntity, SURVEY_MODE, SurveyMode, SurveyRedux} from "./type";
 import {RootState} from "./index";
 
 export const defaultQuestion: QuestionEntity = {
@@ -59,6 +59,7 @@ export const selectSectionById = createSelector(selectSectionByIdOriginal, (sect
 
 const INITIAL_SURVEY_STATE: SurveyRedux = {
     sections: sectionAdapter.getInitialState({}),
+    mode: SURVEY_MODE.EDIT
 };
 
 const surveySlice: Slice<SurveyRedux> = createSlice({
@@ -72,7 +73,6 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
                 description: '',
                 questions: questionAdapter.getInitialState({})
             };
-            console.log(newSection)
             sectionAdapter.addOne(state.sections, newSection);
         },
         updateSection: (state, action: PayloadAction<SectionEntity>) => {
@@ -131,6 +131,10 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
         },
         removeQuestion: (state, action: PayloadAction<{sectionId: EntityId, questionId: EntityId}>) => {
             questionAdapter.removeOne(state.sections.entities[action.payload.sectionId].questions, action.payload.questionId);
+        },
+        setMode: (state, action: PayloadAction<{ mode: SurveyMode }>) => {
+            const {mode} = action.payload;
+            state.mode = mode
         }
     },
 });
@@ -144,7 +148,10 @@ export const {
     updateQuestion,
     copyQuestion,
     reorderQuestions,
-    removeQuestion
+    removeQuestion,
+    setMode
 } = surveySlice.actions;
+
+export const selectMode = (state: RootState) => state.survey.mode;
 
 export default surveySlice;

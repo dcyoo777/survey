@@ -1,0 +1,27 @@
+@import "src/view/style/variable";
+@import "src/view/style/color";
+@import "src/view/style/font";
+@import "src/view/style/mixins";
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px  20px;
+  background-color: $white;
+
+  .mode-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $gray5;
+    }
+  }
+}
