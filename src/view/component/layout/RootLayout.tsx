@@ -14,8 +14,8 @@ function RootLayout() {
 
     const [isLoaded, setIsLoaded] = React.useState(false);
 
-    const saveToLocalStorage = useDebouncedCallback(async (survey: any) => {
-        localStorage.setItem("survey", JSON.stringify(survey));
+    const saveToLocalStorage = useDebouncedCallback(async (item: any) => {
+        localStorage.setItem("survey", JSON.stringify(item));
     }, 1000)
 
     useEffect(() => {

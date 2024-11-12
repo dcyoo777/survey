@@ -1,11 +1,12 @@
 import React, {createContext, useCallback} from 'react';
 import {EntityId} from "@reduxjs/toolkit";
-import {QuestionEntity} from "../../../redux/type";
+import {QuestionEntity, SURVEY_MODE} from "../../../redux/type";
 import QuestionHeader from "./QuestionHeader";
 import QuestionBody from "./QuestionBody";
 import QuestionFooter from "./QuestionFooter";
 import './Question.scss';
-import {defaultQuestion} from "../../../redux/survey";
+import {defaultQuestion, selectMode} from "../../../redux/survey";
+import {useSelector} from "react-redux";
 
 export const questionContext:React.Context<{sectionId: EntityId, question: QuestionEntity}> = createContext({
     question: defaultQuestion,
@@ -19,12 +20,14 @@ type QuestionProps = {
 
 function Question({sectionId, question}: QuestionProps) {
 
+    const mode = useSelector(selectMode);
+
     return (
         <questionContext.Provider value={{question, sectionId}}>
             <div className={"question"}>
                 <QuestionHeader/>
                 <QuestionBody/>
-                <QuestionFooter/>
+                {mode === SURVEY_MODE.EDIT && <QuestionFooter/>}
             </div>
         </questionContext.Provider>
     );

@@ -6,10 +6,11 @@ import QuestionRadioButton from "./form/QuestionRadioButton";
 import QuestionCheckbox from "./form/QuestionCheckbox";
 import QuestionSelect from "./form/QuestionSelect";
 import {questionContext} from "./Question";
+import "./QuestionBody.scss";
 
 function QuestionBody() {
 
-    const {sectionId, question} = useContext(questionContext);
+    const {question} = useContext(questionContext);
 
     const content = useCallback(() => {
         switch (question.type) {
@@ -26,10 +27,10 @@ function QuestionBody() {
             default:
                 return null;
         }
-    }, [sectionId, question]);
+    }, [question]);
 
     return (
-        <div>
+        <div className={"question-body"}>
             {content()}
         </div>
     );
