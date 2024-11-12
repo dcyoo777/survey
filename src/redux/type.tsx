@@ -26,23 +26,22 @@ export type QuestionOptionType = {
     label: string;
 }
 
+export type QuestionOption  = {
+    options: QuestionOptionType[];
+    isEtc: boolean;
+}
+
 export type QuestionShortTextType = QuestionCommonType & {
 }
 
 export type QuestionLongTextType = QuestionCommonType & {
 }
 
-export type QuestionRadioButtonType = QuestionCommonType & {
-    options: QuestionOptionType[];
-}
+export type QuestionRadioButtonType = QuestionCommonType & QuestionOption
 
-export type QuestionCheckboxType = QuestionCommonType & {
-    options: QuestionOptionType[];
-}
+export type QuestionCheckboxType = QuestionCommonType & QuestionOption
 
-export type QuestionSelectType = QuestionCommonType & {
-    options: QuestionOptionType[];
-}
+export type QuestionSelectType = QuestionCommonType & QuestionOption
 
 export type QuestionEntity = QuestionShortTextType | QuestionLongTextType | QuestionRadioButtonType | QuestionCheckboxType | QuestionSelectType;
 

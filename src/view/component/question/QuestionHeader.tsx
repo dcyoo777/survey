@@ -40,10 +40,16 @@ function QuestionHeader() {
     return (
         <div className={"question-header"}>
             <div className={"question-header-top"}>
-                <input className={"question-header-question"} name={"question"} value={question.question} onChange={onChange} placeholder={"질문"} disabled={mode !== SURVEY_MODE.EDIT}/>
-                {mode === SURVEY_MODE.EDIT && <SelectQuestionType selectedQuestionType={question.type} setSelectedQuestionType={setSelectedQuestionType}/>}
+                {mode === SURVEY_MODE.VIEW && question.isRequired &&
+                    <span className={"question-header-required"}>*</span>}
+                <input className={"question-header-question"} name={"question"} value={question.question}
+                       onChange={onChange} placeholder={"질문"} disabled={mode !== SURVEY_MODE.EDIT}/>
+                {mode === SURVEY_MODE.EDIT && <SelectQuestionType selectedQuestionType={question.type}
+                                                                  setSelectedQuestionType={setSelectedQuestionType}/>}
             </div>
-            {question.isShowDescription && <input className={"question-header-description"} name={"description"} value={question.description} onChange={onChange} placeholder={"설명"} disabled={mode !== SURVEY_MODE.EDIT}/>}
+            {question.isShowDescription &&
+                <input className={"question-header-description"} name={"description"} value={question.description}
+                       onChange={onChange} placeholder={"설명"} disabled={mode !== SURVEY_MODE.EDIT}/>}
         </div>
     );
 }

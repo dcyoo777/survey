@@ -9,17 +9,8 @@ import {
 import {QUESTION_TYPE, QuestionEntity, SectionEntity, SURVEY_MODE, SurveyMode, SurveyRedux} from "./type";
 import {RootState} from "./index";
 
-export const defaultQuestion: QuestionEntity = {
-    id: 0,
-    type: QUESTION_TYPE.RADIO_BUTTON,
-    question: '',
-    isShowDescription: false,
-    description: '',
-    answer: '',
-    isRequired: false,
-    options: [{id: 1, label: '옵션 1'}],
-    order: 0
-};
+
+// Define adapters and selectors
 
 const sectionAdapter = createEntityAdapter<SectionEntity>({
     sortComparer: (a, b) => a.id.toString().localeCompare(b.id.toString())
@@ -57,10 +48,35 @@ export const selectSectionById = createSelector(selectSectionByIdOriginal, (sect
     };
 });
 
+// Default values
+
+export const defaultSection: SectionEntity = {
+    id: 0,
+    title: '',
+    description: '',
+    questions: questionAdapter.getInitialState({})
+};
+
+export const defaultQuestion: QuestionEntity = {
+    id: 0,
+    type: QUESTION_TYPE.RADIO_BUTTON,
+    question: '',
+    isShowDescription: false,
+    description: '',
+    answer: '',
+    isRequired: false,
+    options: [{id: 1, label: '옵션 1'}],
+    isEtc: false,
+    order: 0
+};
+
 const INITIAL_SURVEY_STATE: SurveyRedux = {
     sections: sectionAdapter.getInitialState({}),
     mode: SURVEY_MODE.EDIT
 };
+
+
+// Define slice and actions
 
 const surveySlice: Slice<SurveyRedux> = createSlice({
     name: 'survey',
@@ -71,10 +87,8 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
         },
         createSection: (state) => {
             const newSection: SectionEntity = {
+                ...defaultSection,
                 id: state.sections.ids.length + 1,
-                title: '',
-                description: '',
-                questions: questionAdapter.getInitialState({})
             };
             sectionAdapter.addOne(state.sections, newSection);
         },
@@ -99,14 +113,8 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
         createQuestion: (state, action: PayloadAction<{ sectionId: EntityId }>) => {
             const {sectionId} = action.payload;
             const newQuestion: QuestionEntity = {
+                ...defaultQuestion,
                 id: state.sections.entities[sectionId].questions.ids.length + 1,
-                type: QUESTION_TYPE.RADIO_BUTTON,
-                question: '',
-                isShowDescription: false,
-                description: '',
-                answer: '',
-                isRequired: false,
-                options: [{id: 1, label: '옵션 1'}],
                 order: state.sections.entities[sectionId].questions.ids.length
             }
             questionAdapter.addOne(state.sections.entities[sectionId].questions, newQuestion);
@@ -135,6 +143,13 @@ const surveySlice: Slice<SurveyRedux> = createSlice({
         removeQuestion: (state, action: PayloadAction<{sectionId: EntityId, questionId: EntityId}>) => {
             questionAdapter.removeOne(state.sections.entities[action.payload.sectionId].questions, action.payload.questionId);
         },
+        clearAnswers: (state) => {
+            state.sections.ids.forEach((sectionId) => {
+                state.sections.entities[sectionId].questions.ids.forEach((questionId) => {
+                    state.sections.entities[sectionId].questions.entities[questionId].answer = '';
+                });
+            });
+        },
         setMode: (state, action: PayloadAction<{ mode: SurveyMode }>) => {
             const {mode} = action.payload;
             state.mode = mode
@@ -153,6 +168,7 @@ export const {
     copyQuestion,
     reorderQuestions,
     removeQuestion,
+    clearAnswers,
     setMode
 } = surveySlice.actions;
 

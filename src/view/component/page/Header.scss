@@ -4,11 +4,14 @@
 @import "src/view/style/mixins";
 
 header {
+  position: sticky;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  top: 0;
   padding: 10px  20px;
   background-color: $white;
+  z-index: 1;
 
   .mode-button {
     display: flex;
