@@ -10,26 +10,4 @@
   align-items: flex-end;
   width: 100%;
   gap: 10px;
-
-  &-controller {
-    position: absolute;
-    top: 0;
-    padding: 4px;
-    border-radius: 4px;
-    transform: translateX(calc(100% + 10px));
-    background-color: $white;
-
-    &-add {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4px;
-      border-radius: 4px;
-
-      &:hover {
-        background-color: $gray5;
-      }
-    }
-
-  }
 }

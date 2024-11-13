@@ -10,4 +10,30 @@ main {
   padding: 40px;
   @include max-width-container(800px);
   gap: 40px;
+
+  .controller {
+    position: fixed;
+    right: 4px;
+    transform: translateX(-100%);
+
+    &-body {
+      padding: 4px;
+      gap: 4px;
+      border-radius: 4px;
+      background-color: $white;
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: $gray5;
+      }
+    }
+
+  }
 }
