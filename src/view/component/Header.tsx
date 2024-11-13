@@ -2,9 +2,9 @@ import React, {useCallback} from 'react';
 import './Header.scss';
 import {FaRegEye} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
-import {clearAnswers, selectMode, setMode} from "../../../redux/survey";
-import {SURVEY_MODE} from "../../../redux/type";
 import {FiEdit3} from "react-icons/fi";
+import {clearAnswers, selectMode, setMode} from "../../redux/survey";
+import {SURVEY_MODE} from "../../redux/type";
 
 function Header() {
 

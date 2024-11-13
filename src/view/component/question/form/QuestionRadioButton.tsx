@@ -107,9 +107,9 @@ function QuestionRadioButton() {
         <div className={"question-radio-button"}>
             {question.options.map((option, index) => {
                 return <QuestionOptionDrop type={"radio-button"} questionKey={`${sectionId}-${question.id}`}
-                                           option={option}>
+                                           option={option} key={`${sectionId}-${question.id}-${index}`}>
                     <QuestionOptionDrag type={"radio-button"} questionKey={`${sectionId}-${question.id}`} option={option}>
-                        <div className={"question-radio-button-row"} key={`${sectionId}-${question.id}-${index}`}>
+                        <div className={"question-radio-button-row"}>
                             {clearState && <input id={`${sectionId}-${question.id}-${option.id}`} type={"radio"}
                                                   {...(mode === SURVEY_MODE.EDIT && {checked: false})}
                                                   name={`${sectionId}-${question.id}-answer`}
@@ -140,11 +140,11 @@ function QuestionRadioButton() {
                 </QuestionOptionDrop>
             })}
             {question.isEtc && <div className={"question-radio-button-row"}>
-                <input id={`${sectionId}-${question.id}-0`} type={"radio"}
+                {clearState && <input id={`${sectionId}-${question.id}-0`} type={"radio"}
                        {...(mode === SURVEY_MODE.EDIT && {checked: false})}
                        name={`${sectionId}-${question.id}-answer`}
                        onChange={onChangeRadioButton}
-                       disabled={mode !== SURVEY_MODE.VIEW}/>
+                       disabled={mode !== SURVEY_MODE.VIEW}/>}
                 {mode === SURVEY_MODE.EDIT && <div className={cn("question-radio-button-label VIEW")}>기타</div>}
                 {mode === SURVEY_MODE.VIEW && clearState && <input id={`${sectionId}-${question.id}-etc`}
                                                                    className={cn("question-radio-button-label etc")}

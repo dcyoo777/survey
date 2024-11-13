@@ -83,10 +83,10 @@ function QuestionSelect() {
             {mode === SURVEY_MODE.EDIT && <>
                 {question.options.map((option, index) => {
                     return <QuestionOptionDrop type={"select"} questionKey={`${sectionId}-${question.id}`}
-                                               option={option}>
+                                               option={option} key={`${sectionId}-${question.id}-${index}`}>
                         <QuestionOptionDrag type={"select"} questionKey={`${sectionId}-${question.id}`}
                                             option={option}>
-                            <div className={"question-radio-button-row"} key={`${sectionId}-${question.id}-${index}`}>
+                            <div className={"question-radio-button-row"}>
                                 <span>{index + 1}</span>
                                 <input className={"question-radio-button-label edit"} name={option.id.toString()}
                                        value={option.label}

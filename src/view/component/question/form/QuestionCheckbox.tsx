@@ -27,28 +27,74 @@ function QuestionCheckbox() {
 
     const mode = useSelector(selectMode);
 
+    const [selectedOptionIds, setSelectedOptionIds] = React.useState<number[]>([]);
+
     const onChangeEtc = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateQuestion({
-            sectionId,
-            question: {
-                ...question,
-                answer: e.target.value
+
+        const {value} = e.target;
+
+        if (value === "") {
+            const checkbox = document.getElementById(`${sectionId}-${question.id}-0`) as HTMLInputElement;
+            if (checkbox.checked) {
+                checkbox.click();
             }
-        }));
+            setSelectedOptionIds(selectedOptionIds.filter(id => id !== 0));
+            return;
+        }
+
         const checkbox = document.getElementById(`${sectionId}-${question.id}-0`) as HTMLInputElement;
         if (!checkbox.checked) {
             checkbox.click();
         }
-    }, [dispatch, question, sectionId]);
 
-    const onChangeCheckbox = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const {id} = e.target;
-        const optionId = parseInt(id.split("-")[2])
+        const newSelectedOptionIds = selectedOptionIds.includes(0) ? selectedOptionIds : [...selectedOptionIds, 0];
+
+        setSelectedOptionIds(newSelectedOptionIds);
+
+        const answers = newSelectedOptionIds.map(id => {
+            if (id === 0) {
+                const etc = document.getElementById(`${sectionId}-${question.id}-etc`) as HTMLInputElement;
+                return etc.value
+            }
+            return question.options.find(option => option.id === id)?.label ?? ""
+        })
+
         dispatch(updateQuestion({
             sectionId,
             question: {
                 ...question,
-                answer: question.options.find(option => option.id === optionId)?.label ?? ""
+                answer: answers.join(" | ")
+            }
+        }));
+
+    }, [dispatch, question, sectionId]);
+
+    const onChangeCheckbox = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const {id, checked} = e.target;
+        const optionId = parseInt(id.split("-")[2])
+        let newSelectedOptionIds = [...selectedOptionIds];
+
+        if (checked) {
+            newSelectedOptionIds.push(optionId);
+        } else {
+            newSelectedOptionIds = newSelectedOptionIds.filter(id => id !== optionId);
+        }
+
+        setSelectedOptionIds(newSelectedOptionIds);
+
+        const answers = newSelectedOptionIds.map(id => {
+            if (id === 0) {
+                const etc = document.getElementById(`${sectionId}-${question.id}-etc`) as HTMLInputElement;
+                return etc.value
+            }
+            return question.options.find(option => option.id === id)?.label ?? ""
+        })
+
+        dispatch(updateQuestion({
+            sectionId,
+            question: {
+                ...question,
+                answer: answers.join(" | ")
             }
         }));
     }, [dispatch, question, sectionId]);
@@ -112,9 +158,9 @@ function QuestionCheckbox() {
     return (
         <div className={"question-checkbox"}>
             {question.options.map((option, index) => {
-                return <QuestionOptionDrop type={"checkbox"} questionKey={`${sectionId}-${question.id}`} option={option}>
+                return <QuestionOptionDrop type={"checkbox"} questionKey={`${sectionId}-${question.id}`} option={option} key={`${sectionId}-${question.id}-${index}`}>
                     <QuestionOptionDrag type={"checkbox"} questionKey={`${sectionId}-${question.id}`} option={option}>
-                        <div className={"question-checkbox-row"} key={`${sectionId}-${question.id}-${index}`}>
+                        <div className={"question-checkbox-row"}>
                             {clearState && <input id={`${sectionId}-${question.id}-${option.id}`} type={"checkbox"}
                                                   {...(mode === SURVEY_MODE.EDIT && {checked: false})}
                                                   name={`${sectionId}-${question.id}-answer`}
