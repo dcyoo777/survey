@@ -1,4 +1,4 @@
-import React, {useCallback, useContext} from 'react';
+import React, {createContext, useCallback, useContext} from 'react';
 import {questionContext} from "../Question";
 import {useDispatch, useSelector} from "react-redux";
 import {selectMode, updateQuestion} from "../../../../redux/survey";
@@ -7,11 +7,13 @@ import './QuestionRadioButton.scss';
 import {EntityId} from "@reduxjs/toolkit";
 import {IoMdClose} from "react-icons/io";
 import cn from "classnames";
+import {clearContext} from "../../layout/RootLayout";
 
 function QuestionRadioButton() {
 
     const dispatch = useDispatch();
 
+    const {state: clearState} = useContext(clearContext);
     const {sectionId, question} = useContext(questionContext) as {
         sectionId: EntityId,
         question: QuestionRadioButtonType
@@ -102,11 +104,11 @@ function QuestionRadioButton() {
         <div className={"question-radio-button"}>
             {question.options.map((option, index) => {
                 return <div className={"question-radio-button-row"} key={`${sectionId}-${question.id}-${index}`}>
-                    <input id={`${sectionId}-${question.id}-${option.id}`} type={"radio"}
+                    {clearState && <input id={`${sectionId}-${question.id}-${option.id}`} type={"radio"}
                            {...(mode === SURVEY_MODE.EDIT && {checked: false})}
                            name={`${sectionId}-${question.id}-answer`}
                            onChange={onChangeRadioButton}
-                           disabled={mode !== SURVEY_MODE.VIEW}/>
+                           disabled={mode !== SURVEY_MODE.VIEW}/>}
                     {mode === SURVEY_MODE.VIEW && <label className={"question-radio-button-label"}
                                                          htmlFor={`${sectionId}-${question.id}-${option.id}`}>
                         {option.label}

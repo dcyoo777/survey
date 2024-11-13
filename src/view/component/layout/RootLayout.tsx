@@ -1,10 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {createContext, useEffect} from 'react';
 import './RootLayout.scss';
 import Main from "../page/Main";
 import Header from "../page/Header";
 import {loadSurvey, selectSurvey} from "../../../redux/survey";
 import {useDispatch, useSelector} from "react-redux";
 import {useDebouncedCallback} from "use-debounce";
+import Footer from "../page/Footer";
+
+export const clearContext = createContext({
+    state: true,
+    clear: () => {}
+});
 
 function RootLayout() {
 
@@ -13,6 +19,7 @@ function RootLayout() {
     const survey = useSelector(selectSurvey);
 
     const [isLoaded, setIsLoaded] = React.useState(false);
+    const [clearState, setClearState] = React.useState(true);
 
     const saveToLocalStorage = useDebouncedCallback(async (item: any) => {
         localStorage.setItem("survey", JSON.stringify(item));
@@ -37,10 +44,21 @@ function RootLayout() {
     }
 
     return (
-        <div className={"root-layout"}>
-            <Header/>
-            <Main/>
-        </div>
+        <clearContext.Provider value={{
+            state: clearState,
+            clear: () => {
+                setClearState(false)
+                setTimeout(() => {
+                    setClearState(true)
+                }, 1)
+            }
+        }}>
+            <div className={"root-layout"}>
+                <Header/>
+                <Main/>
+                <Footer/>
+            </div>
+        </clearContext.Provider>
     );
 }
 

@@ -8,7 +8,7 @@
   flex-direction: column;
   width: 100%;
   padding: 24px;
-  border-radius: 10px;
+  border-radius: 4px;
   background-color: $white;
 
   &-title {
@@ -34,7 +34,7 @@
   &-description {
     margin-top: 6px;
     font-size: .9em;
-    color: $black;
+    color: $gray3;
     border: none;
     border-bottom: solid 2px transparent;
     outline: none;

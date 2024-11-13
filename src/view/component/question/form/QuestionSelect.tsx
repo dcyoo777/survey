@@ -105,7 +105,7 @@ function QuestionSelect() {
             </>}
             {mode === SURVEY_MODE.VIEW && <Select selectedOptionId={question.options.find(option => option.label === question.answer)?.id ?? ""}
                                                   setSelectedOptionId={onSelectOption}
-                                                  options={question.options}/>}
+                                                  options={[{id: "", label: "선택"}, ...question.options]}/>}
 
         </div>
     );

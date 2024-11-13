@@ -1,0 +1,49 @@
+@import "src/view/style/variable";
+@import "src/view/style/color";
+@import "src/view/style/font";
+@import "src/view/style/mixins";
+
+footer {
+  display: flex;
+  //align-items: self-start;
+  justify-content: space-between;
+  height: 60px;
+  padding: 10px 20px;
+  background-color: $white;
+
+  .submit {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    background-color: $secondary;
+    color: $white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $quaternary;
+    }
+  }
+
+  .clear {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: $gray6;
+    color: $white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $gray5;
+    }
+  }
+}

@@ -7,11 +7,13 @@ import './QuestionCheckbox.scss';
 import {EntityId} from "@reduxjs/toolkit";
 import {IoMdClose} from "react-icons/io";
 import cn from "classnames";
+import {clearContext} from "../../layout/RootLayout";
 
 function QuestionCheckbox() {
 
     const dispatch = useDispatch();
 
+    const {state: clearState} = useContext(clearContext);
     const {sectionId, question} = useContext(questionContext) as {
         sectionId: EntityId,
         question: QuestionRadioButtonType
@@ -105,11 +107,11 @@ function QuestionCheckbox() {
         <div className={"question-checkbox"}>
             {question.options.map((option, index) => {
                 return <div className={"question-checkbox-row"} key={`${sectionId}-${question.id}-${index}`}>
-                    <input id={`${sectionId}-${question.id}-${option.id}`} type={"checkbox"}
+                    {clearState && <input id={`${sectionId}-${question.id}-${option.id}`} type={"checkbox"}
                            {...(mode === SURVEY_MODE.EDIT && {checked: false})}
                            name={`${sectionId}-${question.id}-answer`}
                            onChange={onChangeCheckbox}
-                           disabled={mode !== SURVEY_MODE.VIEW}/>
+                           disabled={mode !== SURVEY_MODE.VIEW}/>}
                     {mode === SURVEY_MODE.VIEW && <label className={"question-checkbox-label"}
                                                          htmlFor={`${sectionId}-${question.id}-${option.id}`}>
                         {option.label}
