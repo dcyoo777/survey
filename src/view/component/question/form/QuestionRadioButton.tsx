@@ -8,6 +8,8 @@ import {EntityId} from "@reduxjs/toolkit";
 import {IoMdClose} from "react-icons/io";
 import cn from "classnames";
 import {clearContext} from "../../layout/RootLayout";
+import QuestionOptionDrop from "./QuestionOptionDrop";
+import QuestionOptionDrag from "./QuestionOptionDrag";
 
 function QuestionRadioButton() {
 
@@ -104,32 +106,38 @@ function QuestionRadioButton() {
     return (
         <div className={"question-radio-button"}>
             {question.options.map((option, index) => {
-                return <div className={"question-radio-button-row"} key={`${sectionId}-${question.id}-${index}`}>
-                    {clearState && <input id={`${sectionId}-${question.id}-${option.id}`} type={"radio"}
-                           {...(mode === SURVEY_MODE.EDIT && {checked: false})}
-                           name={`${sectionId}-${question.id}-answer`}
-                           onChange={onChangeRadioButton}
-                           disabled={mode !== SURVEY_MODE.VIEW}/>}
-                    {mode === SURVEY_MODE.VIEW && <label className={"question-radio-button-label"}
-                                                         htmlFor={`${sectionId}-${question.id}-${option.id}`}>
-                        {option.label}
-                    </label>}
-                    {mode === SURVEY_MODE.EDIT &&
-                        <input className={"question-radio-button-label edit"} name={option.id.toString()}
-                               value={option.label}
-                               onChange={onChangeOptionLabel} placeholder={"옵션"}
-                               onBlur={(e) => {
-                                   if (e.target.value === "") {
-                                       removeOption(option.id);
-                                   }
-                               }}
-                               disabled={mode !== SURVEY_MODE.EDIT}/>}
-                    {mode === SURVEY_MODE.EDIT && isFocus && <button className={"question-radio-button-delete"} onClick={() => {
-                        removeOption(option.id)
-                    }}>
-                        <IoMdClose/>
-                    </button>}
-                </div>
+                return <QuestionOptionDrop type={"radio-button"} questionKey={`${sectionId}-${question.id}`}
+                                           option={option}>
+                    <QuestionOptionDrag type={"radio-button"} questionKey={`${sectionId}-${question.id}`} option={option}>
+                        <div className={"question-radio-button-row"} key={`${sectionId}-${question.id}-${index}`}>
+                            {clearState && <input id={`${sectionId}-${question.id}-${option.id}`} type={"radio"}
+                                                  {...(mode === SURVEY_MODE.EDIT && {checked: false})}
+                                                  name={`${sectionId}-${question.id}-answer`}
+                                                  onChange={onChangeRadioButton}
+                                                  disabled={mode !== SURVEY_MODE.VIEW}/>}
+                            {mode === SURVEY_MODE.VIEW && <label className={"question-radio-button-label"}
+                                                                 htmlFor={`${sectionId}-${question.id}-${option.id}`}>
+                                {option.label}
+                            </label>}
+                            {mode === SURVEY_MODE.EDIT &&
+                                <input className={"question-radio-button-label edit"} name={option.id.toString()}
+                                       value={option.label}
+                                       onChange={onChangeOptionLabel} placeholder={"옵션"}
+                                       onBlur={(e) => {
+                                           if (e.target.value === "") {
+                                               removeOption(option.id);
+                                           }
+                                       }}
+                                       disabled={mode !== SURVEY_MODE.EDIT}/>}
+                            {mode === SURVEY_MODE.EDIT && isFocus &&
+                                <button className={"question-radio-button-delete"} onClick={() => {
+                                    removeOption(option.id)
+                                }}>
+                                    <IoMdClose/>
+                                </button>}
+                        </div>
+                    </QuestionOptionDrag>
+                </QuestionOptionDrop>
             })}
             {question.isEtc && <div className={"question-radio-button-row"}>
                 <input id={`${sectionId}-${question.id}-0`} type={"radio"}
@@ -139,11 +147,12 @@ function QuestionRadioButton() {
                        disabled={mode !== SURVEY_MODE.VIEW}/>
                 {mode === SURVEY_MODE.EDIT && <div className={cn("question-radio-button-label VIEW")}>기타</div>}
                 {mode === SURVEY_MODE.VIEW && clearState && <input id={`${sectionId}-${question.id}-etc`}
-                                                     className={cn("question-radio-button-label etc")}
-                                                     onChange={onChangeEtc} placeholder={"기타"}/>}
-                {mode === SURVEY_MODE.EDIT && isFocus && <button className={"question-radio-button-delete"} onClick={toggleEtc}>
-                    <IoMdClose/>
-                </button>}
+                                                                   className={cn("question-radio-button-label etc")}
+                                                                   onChange={onChangeEtc} placeholder={"기타"}/>}
+                {mode === SURVEY_MODE.EDIT && isFocus &&
+                    <button className={"question-radio-button-delete"} onClick={toggleEtc}>
+                        <IoMdClose/>
+                    </button>}
             </div>}
             {mode === SURVEY_MODE.EDIT && isFocus && <div className={"question-radio-button-row"}>
                 <button className={"question-radio-button-add"} onClick={addOption}>

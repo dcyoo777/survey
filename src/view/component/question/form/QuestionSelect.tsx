@@ -7,6 +7,8 @@ import './QuestionSelect.scss';
 import {EntityId} from "@reduxjs/toolkit";
 import {IoMdClose} from "react-icons/io";
 import Select, {SelectOptionId} from "../../../component-library/select/Select";
+import QuestionOptionDrop from "./QuestionOptionDrop";
+import QuestionOptionDrag from "./QuestionOptionDrag";
 
 function QuestionSelect() {
 
@@ -80,22 +82,28 @@ function QuestionSelect() {
         <div className={"question-radio-button"}>
             {mode === SURVEY_MODE.EDIT && <>
                 {question.options.map((option, index) => {
-                    return <div className={"question-radio-button-row"} key={`${sectionId}-${question.id}-${index}`}>
-                        <span>{index + 1}</span>
-                        <input className={"question-radio-button-label edit"} name={option.id.toString()}
-                               value={option.label}
-                               onChange={onChangeOptionLabel} placeholder={"옵션"}
-                               onBlur={(e) => {
-                                   if (e.target.value === "") {
-                                       removeOption(option.id);
-                                   }
-                               }}/>
-                        {isFocus && <button className={"question-radio-button-delete"} onClick={() => {
-                            removeOption(option.id)
-                        }}>
-                            <IoMdClose/>
-                        </button>}
-                    </div>
+                    return <QuestionOptionDrop type={"select"} questionKey={`${sectionId}-${question.id}`}
+                                               option={option}>
+                        <QuestionOptionDrag type={"select"} questionKey={`${sectionId}-${question.id}`}
+                                            option={option}>
+                            <div className={"question-radio-button-row"} key={`${sectionId}-${question.id}-${index}`}>
+                                <span>{index + 1}</span>
+                                <input className={"question-radio-button-label edit"} name={option.id.toString()}
+                                       value={option.label}
+                                       onChange={onChangeOptionLabel} placeholder={"옵션"}
+                                       onBlur={(e) => {
+                                           if (e.target.value === "") {
+                                               removeOption(option.id);
+                                           }
+                                       }}/>
+                                {isFocus && <button className={"question-radio-button-delete"} onClick={() => {
+                                    removeOption(option.id)
+                                }}>
+                                    <IoMdClose/>
+                                </button>}
+                            </div>
+                        </QuestionOptionDrag>
+                    </QuestionOptionDrop>
                 })}
                 {isFocus && <div className={"question-radio-button-row"}>
                     <button className={"question-radio-button-add"} onClick={addOption}>
@@ -104,9 +112,10 @@ function QuestionSelect() {
                     </button>
                 </div>}
             </>}
-            {mode === SURVEY_MODE.VIEW && <Select selectedOptionId={question.options.find(option => option.label === question.answer)?.id ?? ""}
-                                                  setSelectedOptionId={onSelectOption}
-                                                  options={[{id: "", label: "선택"}, ...question.options]}/>}
+            {mode === SURVEY_MODE.VIEW &&
+                <Select selectedOptionId={question.options.find(option => option.label === question.answer)?.id ?? ""}
+                        setSelectedOptionId={onSelectOption}
+                        options={[{id: "", label: "선택"}, ...question.options]}/>}
 
         </div>
     );
