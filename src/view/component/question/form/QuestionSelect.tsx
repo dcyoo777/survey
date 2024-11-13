@@ -12,9 +12,10 @@ function QuestionSelect() {
 
     const dispatch = useDispatch();
 
-    const {sectionId, question} = useContext(questionContext) as {
+    const {sectionId, question, isFocus} = useContext(questionContext) as {
         sectionId: EntityId,
-        question: QuestionRadioButtonType
+        question: QuestionRadioButtonType,
+        isFocus: boolean
     };
 
     const mode = useSelector(selectMode);
@@ -89,19 +90,19 @@ function QuestionSelect() {
                                        removeOption(option.id);
                                    }
                                }}/>
-                        <button className={"question-radio-button-delete"} onClick={() => {
+                        {isFocus && <button className={"question-radio-button-delete"} onClick={() => {
                             removeOption(option.id)
                         }}>
                             <IoMdClose/>
-                        </button>
+                        </button>}
                     </div>
                 })}
-                <div className={"question-radio-button-row"}>
+                {isFocus && <div className={"question-radio-button-row"}>
                     <button className={"question-radio-button-add"} onClick={addOption}>
                         <span>{question.options.length + 1}</span>
                         <span className={"question-radio-button-add-label"}>옵션 추가</span>
                     </button>
-                </div>
+                </div>}
             </>}
             {mode === SURVEY_MODE.VIEW && <Select selectedOptionId={question.options.find(option => option.label === question.answer)?.id ?? ""}
                                                   setSelectedOptionId={onSelectOption}

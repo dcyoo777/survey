@@ -41,7 +41,7 @@ function QuestionHeader() {
 
     const dispatch = useDispatch();
 
-    const {sectionId, question} = useContext(questionContext);
+    const {sectionId, question, isFocus} = useContext(questionContext);
 
     const mode = useSelector(selectMode);
 
@@ -71,11 +71,11 @@ function QuestionHeader() {
     return (
         <div className={"question-header"}>
             <div className={"question-header-top"}>
-                {mode === SURVEY_MODE.VIEW && question.isRequired &&
+                {!isFocus && question.isRequired &&
                     <span className={"question-header-required"}>*</span>}
                 <input className={"question-header-question"} name={"question"} value={question.question}
                        onChange={onChange} placeholder={"질문"} disabled={mode !== SURVEY_MODE.EDIT}/>
-                {mode === SURVEY_MODE.EDIT && <Select selectedOptionId={question.type}
+                {mode === SURVEY_MODE.EDIT && isFocus && <Select selectedOptionId={question.type}
                                                       setSelectedOptionId={setSelectedQuestionType}
                                                       options={QUESTION_CONTENTS}
                 />}

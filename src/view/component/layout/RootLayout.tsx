@@ -2,10 +2,11 @@ import React, {createContext, useEffect} from 'react';
 import './RootLayout.scss';
 import Main from "../page/Main";
 import Header from "../page/Header";
-import {loadSurvey, selectSurvey} from "../../../redux/survey";
+import {loadSurvey, selectMode, selectSurvey} from "../../../redux/survey";
 import {useDispatch, useSelector} from "react-redux";
 import {useDebouncedCallback} from "use-debounce";
 import Footer from "../page/Footer";
+import {SURVEY_MODE} from "../../../redux/type";
 
 export const clearContext = createContext({
     state: true,
@@ -17,6 +18,7 @@ function RootLayout() {
     const dispatch = useDispatch();
 
     const survey = useSelector(selectSurvey);
+    const mode = useSelector(selectMode);
 
     const [isLoaded, setIsLoaded] = React.useState(false);
     const [clearState, setClearState] = React.useState(true);
@@ -56,7 +58,7 @@ function RootLayout() {
             <div className={"root-layout"}>
                 <Header/>
                 <Main/>
-                <Footer/>
+                {mode === SURVEY_MODE.VIEW && <Footer/>}
             </div>
         </clearContext.Provider>
     );

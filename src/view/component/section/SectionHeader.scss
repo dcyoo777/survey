@@ -7,9 +7,14 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 24px;
+  padding: 24px 24px 24px 18px;
+  border-left: solid 6px transparent;
   border-radius: 4px;
   background-color: $white;
+
+  &.focus {
+    border-left: solid 6px $secondary;
+  }
 
   &-title {
     font-size: 2em;
@@ -21,8 +26,8 @@
     appearance: none;
     transition: all 0.2s;
 
-
     &:focus {
+      background-color: $gray6;
       border-bottom: solid 2px $secondary;
     }
 
@@ -42,6 +47,7 @@
     transition: all 0.2s;
 
     &:focus {
+      background-color: $gray6;
       border-bottom: solid 2px $secondary;
     }
 

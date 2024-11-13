@@ -7,7 +7,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
   @include max-width-container(800px);
   gap: 40px;
 }

@@ -14,9 +14,10 @@ function QuestionCheckbox() {
     const dispatch = useDispatch();
 
     const {state: clearState} = useContext(clearContext);
-    const {sectionId, question} = useContext(questionContext) as {
+    const {sectionId, question, isFocus} = useContext(questionContext) as {
         sectionId: EntityId,
-        question: QuestionRadioButtonType
+        question: QuestionRadioButtonType,
+        isFocus: boolean
     };
 
     const mode = useSelector(selectMode);
@@ -126,7 +127,7 @@ function QuestionCheckbox() {
                                    }
                                }}
                                disabled={mode !== SURVEY_MODE.EDIT}/>}
-                    {mode === SURVEY_MODE.EDIT && <button className={"question-checkbox-delete"} onClick={() => {
+                    {mode === SURVEY_MODE.EDIT && isFocus && <button className={"question-checkbox-delete"} onClick={() => {
                         removeOption(option.id)
                     }}>
                         <IoMdClose/>
@@ -134,20 +135,20 @@ function QuestionCheckbox() {
                 </div>
             })}
             {question.isEtc && <div className={"question-checkbox-row"}>
-                <input id={`${sectionId}-${question.id}-0`} type={"checkbox"}
+                {clearState && <input id={`${sectionId}-${question.id}-0`} type={"checkbox"}
                        {...(mode === SURVEY_MODE.EDIT && {checked: false})}
                        name={`${sectionId}-${question.id}-answer`}
                        onChange={onChangeCheckbox}
-                       disabled={mode !== SURVEY_MODE.VIEW}/>
+                       disabled={mode !== SURVEY_MODE.VIEW}/>}
                 {mode === SURVEY_MODE.EDIT && <div className={cn("question-checkbox-label VIEW")}>기타</div>}
-                {mode === SURVEY_MODE.VIEW && <input id={`${sectionId}-${question.id}-etc`}
+                {mode === SURVEY_MODE.VIEW && clearState && <input id={`${sectionId}-${question.id}-etc`}
                                                      className={cn("question-checkbox-label etc")}
                                                      onChange={onChangeEtc} placeholder={"기타"}/>}
-                {mode === SURVEY_MODE.EDIT && <button className={"question-checkbox-delete"} onClick={toggleEtc}>
+                {mode === SURVEY_MODE.EDIT && isFocus && <button className={"question-checkbox-delete"} onClick={toggleEtc}>
                     <IoMdClose/>
                 </button>}
             </div>}
-            {mode === SURVEY_MODE.EDIT && <div className={"question-checkbox-row"}>
+            {mode === SURVEY_MODE.EDIT && isFocus && <div className={"question-checkbox-row"}>
                 <button className={"question-checkbox-add"} onClick={addOption}>
                     <input type={"checkbox"} disabled={true}/>
                     <span className={"question-checkbox-add-label"}>옵션 추가</span>

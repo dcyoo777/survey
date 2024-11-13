@@ -14,9 +14,10 @@ function QuestionRadioButton() {
     const dispatch = useDispatch();
 
     const {state: clearState} = useContext(clearContext);
-    const {sectionId, question} = useContext(questionContext) as {
+    const {sectionId, question, isFocus} = useContext(questionContext) as {
         sectionId: EntityId,
-        question: QuestionRadioButtonType
+        question: QuestionRadioButtonType,
+        isFocus: boolean
     };
 
     const mode = useSelector(selectMode);
@@ -123,7 +124,7 @@ function QuestionRadioButton() {
                                    }
                                }}
                                disabled={mode !== SURVEY_MODE.EDIT}/>}
-                    {mode === SURVEY_MODE.EDIT && <button className={"question-radio-button-delete"} onClick={() => {
+                    {mode === SURVEY_MODE.EDIT && isFocus && <button className={"question-radio-button-delete"} onClick={() => {
                         removeOption(option.id)
                     }}>
                         <IoMdClose/>
@@ -137,14 +138,14 @@ function QuestionRadioButton() {
                        onChange={onChangeRadioButton}
                        disabled={mode !== SURVEY_MODE.VIEW}/>
                 {mode === SURVEY_MODE.EDIT && <div className={cn("question-radio-button-label VIEW")}>기타</div>}
-                {mode === SURVEY_MODE.VIEW && <input id={`${sectionId}-${question.id}-etc`}
+                {mode === SURVEY_MODE.VIEW && clearState && <input id={`${sectionId}-${question.id}-etc`}
                                                      className={cn("question-radio-button-label etc")}
                                                      onChange={onChangeEtc} placeholder={"기타"}/>}
-                {mode === SURVEY_MODE.EDIT && <button className={"question-radio-button-delete"} onClick={toggleEtc}>
+                {mode === SURVEY_MODE.EDIT && isFocus && <button className={"question-radio-button-delete"} onClick={toggleEtc}>
                     <IoMdClose/>
                 </button>}
             </div>}
-            {mode === SURVEY_MODE.EDIT && <div className={"question-radio-button-row"}>
+            {mode === SURVEY_MODE.EDIT && isFocus && <div className={"question-radio-button-row"}>
                 <button className={"question-radio-button-add"} onClick={addOption}>
                     <input type={"radio"} disabled={true}/>
                     <span className={"question-radio-button-add-label"}>옵션 추가</span>

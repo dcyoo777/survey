@@ -31,8 +31,8 @@
     appearance: none;
     transition: all 0.2s;
 
-
     &:focus {
+      background-color: $gray6;
       border-bottom: solid 2px $secondary;
     }
 
@@ -52,6 +52,7 @@
     transition: all 0.2s;
 
     &:focus {
+      background-color: $gray6;
       border-bottom: solid 2px $secondary;
     }
 

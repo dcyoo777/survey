@@ -5,7 +5,6 @@
 
 footer {
   display: flex;
-  //align-items: self-start;
   justify-content: space-between;
   height: 60px;
   padding: 10px 20px;
@@ -35,7 +34,7 @@ footer {
     gap: 8px;
     padding: 8px 16px;
     border-radius: 4px;
-    background-color: $gray6;
+    background-color: $gray4;
     color: $white;
     font-size: 16px;
     font-weight: 700;
