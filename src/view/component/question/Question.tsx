@@ -15,8 +15,8 @@ import useClickOutside from "../../../hook/useClickOutside";
 import cn from "classnames";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
-import {RxDragHandleHorizontal} from "react-icons/rx";
 import {RootState} from "../../../redux";
+import {MdDragHandle} from "react-icons/md";
 
 // @ts-ignore
 export const questionContext:React.Context<{
@@ -99,8 +99,8 @@ function Question({sectionId, question}: QuestionProps) {
                  onMouseLeave={() => setIsHover(false)}
             >
                 <div ref={preview} className={"question-drag"}>
-                    {isHover && <div ref={drag} className={"question-handle"}>
-                        <RxDragHandleHorizontal/>
+                    {mode === SURVEY_MODE.EDIT && isHover && <div ref={drag} className={"question-handle"}>
+                        <MdDragHandle />
                     </div>}
                     {isDragging && <div className={"question-dragging"}>
                     </div>}
