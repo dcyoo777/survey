@@ -28,7 +28,7 @@ function QuestionShortText() {
 
     return (
         <div className={"question-short-text"}>
-            <input className={"question-short-text-input"} name={'answer'} value={question.answer} onChange={onChange} placeholder={"짧은 답변을 입력해주세요."} disabled={mode !== SURVEY_MODE.VIEW}/>
+            <input className={"question-short-text-input"} name={'answer'} value={question.answer} onChange={onChange} placeholder={"답변을 입력해주세요."} disabled={mode !== SURVEY_MODE.VIEW}/>
         </div>
     );
 }

@@ -1,13 +1,14 @@
 import React, {useCallback, useContext} from 'react';
 import {useDispatch} from "react-redux";
 import './QuestionFooter.scss';
-import {MdDeleteOutline, MdOutlineContentCopy} from "react-icons/md";
+import {MdOutlineContentCopy} from "react-icons/md";
 import {HiDotsVertical} from "react-icons/hi";
 import Toggle from "react-toggle";
 import "react-toggle/style.css"
-import {copyQuestion, removeQuestion, selectAllQuestion, updateQuestion} from "../../../redux/survey";
+import {copyQuestion, removeQuestion, updateQuestion} from "../../../redux/survey";
 import useClickOutside from "../../../hook/useClickOutside";
 import {questionContext} from "./Question";
+import {AiOutlineDelete} from "react-icons/ai";
 
 function QuestionFooter() {
 
@@ -62,7 +63,7 @@ function QuestionFooter() {
                 <MdOutlineContentCopy/>
             </button>
             <button className={"question-footer-button"} onClick={onDelete}>
-                <MdDeleteOutline/>
+                <AiOutlineDelete />
             </button>
             <div className={"question-footer-divide"}/>
             <span className={"question-footer-toggle-label"}>필수</span>

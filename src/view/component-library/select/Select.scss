@@ -4,7 +4,7 @@
 @import "src/view/style/mixins";
 
 
-.select-question-type {
+.select {
   position: relative;
   display: flex;
   min-width: 200px;
@@ -53,6 +53,10 @@
 
       &:hover {
         background-color: $gray6;
+      }
+
+      &.active {
+        background-color: rgba($color: $quaternary, $alpha: 0.25);
       }
     }
   }

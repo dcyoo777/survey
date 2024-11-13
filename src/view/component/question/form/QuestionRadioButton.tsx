@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {questionContext} from "../Question";
 import {useDispatch, useSelector} from "react-redux";
 import {selectMode, updateQuestion} from "../../../../redux/survey";
@@ -65,7 +65,7 @@ function QuestionRadioButton() {
     }, [dispatch, question, sectionId]);
 
     const addOption = useCallback(() => {
-        const newId = (question.options?.slice(-1)[0]?.id ?? 0) + 1;
+        const newId = Math.max(...question.options.map(option => option.id), 0) + 1;
         dispatch(updateQuestion({
             sectionId,
             question: {
@@ -114,7 +114,12 @@ function QuestionRadioButton() {
                     {mode === SURVEY_MODE.EDIT &&
                         <input className={"question-radio-button-label edit"} name={option.id.toString()}
                                value={option.label}
-                               onChange={onChangeOptionLabel} placeholder={"짧은 답변을 입력해주세요."}
+                               onChange={onChangeOptionLabel} placeholder={"옵션"}
+                               onBlur={(e) => {
+                                   if (e.target.value === "") {
+                                       removeOption(option.id);
+                                   }
+                               }}
                                disabled={mode !== SURVEY_MODE.EDIT}/>}
                     {mode === SURVEY_MODE.EDIT && <button className={"question-radio-button-delete"} onClick={() => {
                         removeOption(option.id)
@@ -125,6 +130,7 @@ function QuestionRadioButton() {
             })}
             {question.isEtc && <div className={"question-radio-button-row"}>
                 <input id={`${sectionId}-${question.id}-0`} type={"radio"}
+                       {...(mode === SURVEY_MODE.EDIT && {checked: false})}
                        name={`${sectionId}-${question.id}-answer`}
                        onChange={onChangeRadioButton}
                        disabled={mode !== SURVEY_MODE.VIEW}/>
