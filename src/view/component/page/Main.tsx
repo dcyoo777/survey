@@ -5,7 +5,8 @@ import {createQuestion, createSection, selectMode, selectSectionIds} from "../..
 import Section from "../section/Section";
 import {SURVEY_MODE} from "../../../redux/type";
 import {MdOutlineAddCircleOutline} from "react-icons/md";
-import {CiGrid2H} from "react-icons/ci";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {DndProvider} from "react-dnd";
 
 function Main() {
 
@@ -14,15 +15,9 @@ function Main() {
     const mode = useSelector(selectMode);
     const sectionIds = useSelector(selectSectionIds);
 
-    const onCreateSection = useCallback(() => {
-        // @ts-ignore
-        dispatch(createSection());
-    }, [dispatch]);
-
     const onCreateQuestion = useCallback(() => {
-    //     dispatch(createQuestion({sectionId}));
-    // }, [dispatch, sectionId]);
-    }, [dispatch]);
+        dispatch(createQuestion({sectionId: sectionIds[0]}));
+    }, [dispatch, sectionIds]);
 
     useEffect(() => {
         if (sectionIds.length === 0) {
@@ -32,19 +27,18 @@ function Main() {
     }, [dispatch, sectionIds.length]);
 
     return (
-        <main>
-            {mode === SURVEY_MODE.EDIT && <div className={"controller"}>
-                <div className={"controller-body"}>
-                    <button className={"controller-button"} onClick={onCreateQuestion}>
-                        <MdOutlineAddCircleOutline />
-                    </button>
-                    <button className={"controller-button"} onClick={onCreateSection}>
-                        <CiGrid2H />
-                    </button>
-                </div>
-            </div>}
-            {sectionIds.map((sectionId) => <Section key={`section_${sectionId}`} sectionId={sectionId}/>)}
-        </main>
+        <DndProvider backend={HTML5Backend}>
+            <main>
+                {mode === SURVEY_MODE.EDIT && <div className={"controller"}>
+                    <div className={"controller-body"}>
+                        <button className={"controller-button"} onClick={onCreateQuestion}>
+                            <MdOutlineAddCircleOutline/>
+                        </button>
+                    </div>
+                </div>}
+                {sectionIds.map((sectionId) => <Section key={`section_${sectionId}`} sectionId={sectionId}/>)}
+            </main>
+        </DndProvider>
     );
 }
 
