@@ -1,6 +1,6 @@
 # SURVEY FORM
 
-React, Redux 를 사용한 설문조사 양식입니다.
+React, Redux 를 사용하여 Google Form 클론 코딩을 진행하였습니다.
 
 ## 실행 방법
 
